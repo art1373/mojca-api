@@ -7,11 +7,12 @@ import {
   Inject,
   Param,
   Post,
+  Put,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { JwtAuthGuard } from '../user/auth/auth.guard';
-import { CreateProductDto } from './products.dto';
+import { JwtAuthGuard } from '../auth/auth.guard';
+import { CreateProductDto, UpdateProductDto } from './products.dto';
 import { Product } from './products.entity';
 import { ProductsService } from './products.service';
 
@@ -32,6 +33,16 @@ export class ProductsController {
   @Get(':id')
   private getProduct(@Param('id') id: string): Promise<Product> {
     return this.service.getProduct(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Put(':id')
+  private updateProduct(
+    @Body() body: UpdateProductDto,
+    @Param('id') id: string,
+  ) {
+    return this.service.updateProduct(body, id);
   }
 
   @UseGuards(JwtAuthGuard)
