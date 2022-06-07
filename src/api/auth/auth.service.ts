@@ -45,7 +45,7 @@ export class AuthService {
     );
 
     if (!isPasswordValid) {
-      throw new HttpException('Not Found!', HttpStatus.NOT_FOUND);
+      throw new HttpException('Invalid credentials!', HttpStatus.BAD_REQUEST);
     }
 
     this.repository.update(user.id, { lastLoginAt: new Date() });

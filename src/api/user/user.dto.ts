@@ -1,4 +1,11 @@
-import { IsEmail, IsOptional, IsString, MinLength } from 'class-validator';
+import {
+  IsEmail,
+  IsEnum,
+  IsOptional,
+  IsString,
+  MinLength,
+} from 'class-validator';
+import { Role } from '../auth/roles/role.decorator';
 
 export class UpdateUserDto {
   @IsString()
@@ -13,4 +20,8 @@ export class UpdateUserDto {
   @MinLength(8)
   @IsOptional()
   public readonly password?: string;
+
+  @IsEnum(Role)
+  @IsOptional()
+  public readonly roles?: Role;
 }

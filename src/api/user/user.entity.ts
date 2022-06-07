@@ -1,5 +1,6 @@
 import { Exclude } from 'class-transformer';
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Role } from '../auth/roles/role.decorator';
 
 @Entity()
 export class User extends BaseEntity {
@@ -18,4 +19,7 @@ export class User extends BaseEntity {
 
   @Column({ type: 'timestamp', nullable: true, default: null })
   public lastLoginAt: Date | null;
+
+  @Column({ type: 'enum', enum: Role, default: Role.User })
+  public roles: Role;
 }

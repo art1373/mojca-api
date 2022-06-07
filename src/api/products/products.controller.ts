@@ -12,6 +12,8 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/auth.guard';
+import { Role, Roles } from '../auth/roles/role.decorator';
+import { RolesGuard } from '../auth/roles/role.guard';
 import { CreateProductDto, UpdateProductDto } from './products.dto';
 import { Product } from './products.entity';
 import { ProductsService } from './products.service';
@@ -35,7 +37,8 @@ export class ProductsController {
     return this.service.getProduct(id);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin)
   @UseInterceptors(ClassSerializerInterceptor)
   @Put(':id')
   private updateProduct(
@@ -45,14 +48,16 @@ export class ProductsController {
     return this.service.updateProduct(body, id);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin)
   @UseInterceptors(ClassSerializerInterceptor)
   @Delete(':id')
   private deleteProduct(@Param('id') id: string) {
     return this.service.deleteProduct(id);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin)
   @UseInterceptors(ClassSerializerInterceptor)
   @Post('product')
   private createProduct(@Body() body: CreateProductDto): Promise<Product> {
