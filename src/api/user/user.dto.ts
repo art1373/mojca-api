@@ -21,7 +21,7 @@ export class UpdateUserDto {
   @IsOptional()
   public readonly password?: string;
 
-  @IsEnum(Role)
+  @IsEnum(Role, { message: 'Invalid role provided!' })
   @IsOptional()
   public readonly roles?: Role;
 }
