@@ -16,11 +16,18 @@ async function bootstrap() {
     .setVersion('1.0')
     .addTag('mojca/1.0')
     .build();
+  const options = {
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    credentials: true,
+  };
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api', app, document);
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
+  app.enableCors(options);
 
   await app.listen(port, () => {
     console.log('[LIVE]:', config.get<string>('BASE_URL'));

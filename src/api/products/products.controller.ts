@@ -1,5 +1,6 @@
 import {
   Body,
+  CacheInterceptor,
   ClassSerializerInterceptor,
   Controller,
   Delete,
@@ -18,6 +19,7 @@ import { CreateProductDto, UpdateProductDto } from './products.dto';
 import { Product } from './products.entity';
 import { ProductsService } from './products.service';
 
+@UseInterceptors(CacheInterceptor)
 @Controller('products')
 export class ProductsController {
   @Inject(ProductsService)

@@ -13,6 +13,10 @@ export class UserService {
   @InjectRepository(User)
   private readonly repository: Repository<User>;
 
+  public async getAllUsers(): Promise<User[]> {
+    return await this.repository.find({ where: {} });
+  }
+
   public async updateUser(body: UpdateUserDto, req: Request): Promise<User> {
     const user: User = req.user as User;
 

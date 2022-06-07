@@ -10,6 +10,8 @@ import {
   Delete,
   Res,
   Param,
+  CacheInterceptor,
+  Get,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { JwtAuthGuard } from '@/api/auth/auth.guard';
@@ -19,10 +21,19 @@ import { UserService } from './user.service';
 import { Role, Roles } from '../auth/roles/role.decorator';
 import { RolesGuard } from '../auth/roles/role.guard';
 
-@Controller('user')
+@UseInterceptors(CacheInterceptor)
+@Controller('users')
 export class UserController {
   @Inject(UserService)
   private readonly service: UserService;
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin)
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get('all')
+  private getAll(): Promise<User[]> {
+    return this.service.getAllUsers();
+  }
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard, RolesGuard)
