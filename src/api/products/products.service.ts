@@ -13,7 +13,7 @@ export class ProductsService {
     return await this.repository.find({ where: {} });
   }
 
-  public async getProduct(id: string): Promise<Product> {
+  public async getProductById(id: string): Promise<Product> {
     const product = await this.repository.findOne({ where: { id } });
     if (!product) {
       throw new HttpException('Product not found!', HttpStatus.NOT_FOUND);

@@ -35,8 +35,8 @@ export class ProductsController {
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Get(':id')
-  private getProduct(@Param('id') id: string): Promise<Product> {
-    return this.service.getProduct(id);
+  private getProductById(@Param('id') id: string): Promise<Product> {
+    return this.service.getProductById(id);
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)

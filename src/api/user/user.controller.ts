@@ -35,6 +35,14 @@ export class UserController {
     return this.service.getAllUsers();
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin)
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get(':id')
+  private getUserById(@Param('id') id: string): Promise<User> {
+    return this.service.getUser(id);
+  }
+
   @Delete(':id')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Admin)

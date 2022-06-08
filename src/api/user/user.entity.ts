@@ -1,6 +1,13 @@
 import { Exclude } from 'class-transformer';
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Role } from '../auth/roles/role.decorator';
+import { Order } from '../order/order.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -22,4 +29,7 @@ export class User extends BaseEntity {
 
   @Column({ type: 'enum', enum: Role, default: Role.User })
   public roles: Role;
+
+  @OneToMany(() => Order, (order) => order.userId)
+  orderItems: Order[];
 }
