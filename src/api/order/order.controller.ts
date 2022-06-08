@@ -13,6 +13,7 @@ import {
   Param,
   Res,
 } from '@nestjs/common';
+import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/auth.guard';
 import { Role, Roles } from '../auth/roles/role.decorator';
 import { RolesGuard } from '../auth/roles/role.guard';
@@ -20,6 +21,7 @@ import { CreateOrderDto } from './order.dto';
 import { Order } from './order.entity';
 import { OrderService } from './order.service';
 
+@ApiBearerAuth()
 @UseInterceptors(CacheInterceptor)
 @Controller('order')
 export class OrderController {

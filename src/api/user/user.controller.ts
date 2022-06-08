@@ -20,7 +20,9 @@ import { User } from './user.entity';
 import { UserService } from './user.service';
 import { Role, Roles } from '../auth/roles/role.decorator';
 import { RolesGuard } from '../auth/roles/role.guard';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
+@ApiBearerAuth()
 @UseInterceptors(CacheInterceptor)
 @Controller('users')
 export class UserController {

@@ -1,6 +1,7 @@
 import { DocumentBuilder } from '@nestjs/swagger';
 
 export const swaggerConfig = new DocumentBuilder()
+  .addBearerAuth()
   .setTitle('mojca-api')
   .setDescription('Mojca ecommerce')
   .setVersion('1.0')

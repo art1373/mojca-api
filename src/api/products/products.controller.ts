@@ -12,13 +12,14 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/auth.guard';
 import { Role, Roles } from '../auth/roles/role.decorator';
 import { RolesGuard } from '../auth/roles/role.guard';
 import { CreateProductDto, UpdateProductDto } from './products.dto';
 import { Product } from './products.entity';
 import { ProductsService } from './products.service';
-
+@ApiBearerAuth()
 @UseInterceptors(CacheInterceptor)
 @Controller('products')
 export class ProductsController {
